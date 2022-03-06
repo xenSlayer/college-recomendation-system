@@ -1,0 +1,134 @@
+{% extends 'layout.html'%}
+{%block content%}
+
+<!-- This is the college list html file images have been commented and a copyright image as been added -->
+
+<div class="scroll">
+    <h1 id='rep' >Universities <i class='fa fa-university'></i></h1>
+
+
+    <input type="text" class="usearch" name="usearch" value="" placeholder="Search by college">
+    <button type="button" name="ub" class="ub"><i class="fa fa-times"></i></button>
+
+
+       <select class="pageno">
+         {%for i in range(1,ld+1)%}
+         <option value="{{i}}">{{i}}</option>
+         {%endfor%}
+       </select>
+
+
+
+  </div>
+  <div class="searchlist">
+
+  </div>
+<div class='holder'>
+  {%for i in range(datalen)%}
+  <div class="card">
+    <div class="img__wrap">
+    <!-- <img class="img__img" src="{{data.iloc[i].Image}}" alt="http://dirtydeedsindustries.com/wp-content/uploads/2016/08/placeholder.jpg.png"> -->
+    <img src="https://media.istockphoto.com/photos/university-sign-in-fall-picture-id182240679?b=1&k=20&m=182240679&s=170667a&w=0&h=B5nYT957nFgQbNzHqjZZr0VUhwWX-Dh3fTq-jBzU7qI=" alt="">
+    <div class="img__description first">
+      {%if data.iloc[i].TOEFL!=0 %}
+      <p>  TOFEL : {{data.iloc[i].TOEFL}}</p>
+      {%endif%}
+      {%if data.iloc[i].IELTS!=0 %}
+        <p>IELTS: {{data.iloc[i].IELTS}}</p>
+      {%endif%}
+      {%if data.iloc[i].Public_university!=0 %}
+        <p>Private University</p>
+      {%else%}
+        <p>Public University</p>
+      {%endif%}
+    </div>
+
+    </div>
+    <div class="cont">
+      <a href="{{data.iloc[i].link}}" target="_blank">
+      <h1 style="font-family: 'Kanit', sans-serif;">{{data.iloc[i].Universities}}</h1>
+      </a>
+      <h3 style="font-family: 'Montserrat', sans-serif;">Fees-{{data.iloc[i].Fees}}</h3>
+    </div>
+  </div>
+  {%endfor%}
+
+  </div>
+<script type="text/javascript">
+  boxes=document.querySelectorAll('.card')
+  pageno=document.querySelector('.pageno')
+  for(i=20;i<boxes.length;i++)
+  {
+    boxes[i].style.display = 'none';
+  }
+
+  pageno.addEventListener('change',()=>{
+      for(i=0;i<boxes.length;i++)
+      {
+        if(i>=(pageno.value-1)*20 && i<(pageno.value*20))
+          boxes[i].style.display = 'block';
+        else
+          boxes[i].style.display = 'none';
+      }
+  })
+
+
+  search=document.querySelector('.usearch')
+  ub=document.querySelector('.ub')
+  holder=document.querySelector('.holder')
+  searchlist=document.querySelector('.searchlist')
+
+  let collegelist=[]
+  {%for i in data['Universities']%}
+    collegelist.push("{{i}}")
+  {%endfor%}
+
+
+  ub.style.visibility='hidden';
+  searchlist.style.display = 'none';
+
+  search.addEventListener('input',(e)=>{
+    let results=[]
+    ub.style.visibility='visible';
+    searchlist.style.display = 'block';
+    holder.style.visibility='hidden';
+
+    if(e.target.value){
+      results=collegelist.filter(result=>result.toLowerCase().includes(e.target.value));
+
+    if(results.length>10)
+      finalresult=results.slice(0,10)
+    else {
+      finalresult=results
+    }
+
+
+    searchlist.innerHTML=""
+    showlist=""
+    for(i=0;i<boxes.length;i++)
+    {
+      if (finalresult.find((final) => final === boxes[i].querySelector('.cont').querySelector('h1').textContent))
+      {
+        showlist+="<div class='card'>"+boxes[i].innerHTML+"</div>"
+
+
+
+      }
+
+    }
+
+    searchlist.innerHTML=showlist
+  }
+  })
+
+  ub.addEventListener('click',()=>{
+    ub.style.visibility='hidden';
+    holder.style.visibility='visible';
+    searchlist.style.display = 'none';
+    search.value=""
+  })
+
+
+
+</script>
+{%endblock content%}

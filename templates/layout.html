@@ -1,0 +1,102 @@
+
+
+<!-- layout page to make header and footer for all pages -->
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    {%if title%}
+      <title>My University | {{title}}</title>
+    {%else%}
+      <title>My University</title>
+    {%endif%}
+
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='fa fa-graduation-cap icon'></i>
+        <div class="logo_name">My University</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="{{url_for('home')}}">
+          <i class='fa fa-home' ></i>
+          <span class="links_name">Home</span>
+        </a>
+        <span class="tooltip">Home</span>
+      </li>
+      <li>
+        <a href="{{url_for('universities')}}">
+          <i class='fa fa-university' ></i>
+          <span class="links_name">Universities</span>
+        </a>
+        <span class="tooltip">Universities</span>
+      </li>
+      <li>
+      <a href="{{url_for('findmycollege')}}">
+        <i class='fa fa-filter' ></i>
+        <span class="links_name">College Finder</span>
+      </a>
+      <span class="tooltip">College Recommender</span>
+    </li>
+      <li>
+       <a href="{{url_for('about')}}">
+         <i class='bx bx-book' ></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li class="profile">
+         <div class="profile-details">
+           <!-- <img src="profile.jpg" alt="profileImg"> -->
+           <div class="name_job">
+             <div class="name">Version 1.0
+                <p>Beta</p>
+             </div>
+
+           </div>
+         </div>
+         <i class='fa fa-backward' id="log_out" ></i>
+     </li>
+    </ul>
+  </div>
+  <section class="home-section">
+
+{%block content%}
+{%endblock content%}
+
+
+
+  </section>
+  <script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+
+
+
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+  }
+  </script>
+</body>
+</html>

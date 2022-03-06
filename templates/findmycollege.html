@@ -1,0 +1,187 @@
+{% extends 'layout.html'%}
+{%block content%}
+
+<h1 id='rep'><i class='fa fa-search'></i>Find My College</h1>
+
+
+<div class="hbox">
+  <div class="filter">
+    <div id="first">
+      <form class="" action="" method="post">
+      <h1>College Filters</h1>
+    <table class="fbox">
+      <tbody>
+        {%if userdatalen==8%}
+
+        <tr>
+          <td><label for="Public_university">Public University</label></td>
+          {%if userdata[0]==1%}
+          <td><input type="checkbox" name="Public_university" checked value="1"></td>
+          {%else%}
+          <td><input type="checkbox" name="Public_university" value="1"></td>
+          {%endif%}
+        </tr>
+
+        <tr>
+          <td><label for="Scholarship">Scholarship</label></td>
+          {%if userdata[1]==1%}
+          <td><input type="checkbox" name="Scholarship" checked  value="1"></td>
+          {%else%}
+          <td><input type="checkbox" name="Scholarship" value="1"></td>
+          {%endif%}
+        </tr>
+
+        <tr>
+          <td><label for="Accommodation">Accommodation</label></td>
+          {%if userdata[2]==1%}
+          <td><input type="checkbox" name="Accommodation" checked value="1"></td>
+          {%else%}
+          <td><input type="checkbox" name="Accommodation" value="1"></td>
+          {%endif%}
+        </tr>
+
+        <tr>
+          <td><label for="Fees">Fees (in lakh)</label></td>
+          <td><input type="number" name="Fees" value="{{userdata[3]}}" step="0.5" min="8" max="50"></td>
+        </tr>
+
+        <tr>
+          <td><label for="TOFEL">TOFEL</label></td>
+          <td><input type="number" name="TOFEL" value="{{userdata[4]}}" required min=0 max=120></td>
+        </tr>
+
+        <tr>
+          <td><label for="IELTS">IELTS</label></td>
+          {%if userdata[5]==0%}
+          <td><input type="number" name="IELTS" value="1" step=0.1 required min=1 max=9></td>
+          {%else%}
+          <td><input type="number" name="IELTS" value="{{userdata[5]}}" step=0.1 required min=1 max=9></td>
+          {%endif%}
+
+        </tr>
+
+        <tr>
+          <td><label for="PTE">PTE</label></td>
+          {%if userdata[6]==0%}
+          <td><input type="number" name="PTE" value="10" step=1 required min=10 max=90></td>
+        {%else%}
+          <td><input type="number" name="PTE" value="{{userdata[6]}}" step=1 required min=10 max=90></td>
+        {%endif%}
+        </tr>
+
+        <tr>
+          <td><label for="GRE">GRE</label></td>
+          {%if userdata[7]==0%}
+          <td><input type="number" name="GRE" value="260" step=1 required min=260 max=340></td>
+          {%else%}
+          <td><input type="number" name="GRE" value="{{userdata[7]}}" step=1 required min=260 max=340></td>
+          {%endif%}
+        </tr>
+
+        {%else%}
+
+          <tr>
+            <td><label for="Public_university">Public University</label></td>
+            <td><input type="checkbox" name="Public_university" checked value="1"></td>
+          </tr>
+
+          <tr>
+            <td><label for="Scholarship">Scholarship</label></td>
+            <td><input type="checkbox" name="Scholarship" value="1"></td>
+          </tr>
+
+          <tr>
+            <td><label for="Accommodation">Accommodation</label></td>
+            <td><input type="checkbox" name="Accommodation" value="1"></td>
+          </tr>
+
+          <tr>
+            <td><label for="Fees">Fees (in lakh)</label></td>
+            <td><input type="number" name="Fees" value="16" step="0.5" min="8" max="50"></td>
+          </tr>
+
+          <tr>
+            <td><label for="TOFEL">TOFEL</label></td>
+            <td><input type="number" name="TOFEL" value="80" required min=0 max=120></td>
+          </tr>
+
+          <tr>
+            <td><label for="IELTS">IELTS</label></td>
+            <td><input type="number" name="IELTS" value="6.5" step=0.1 required min=1 max=9></td>
+          </tr>
+
+          <tr>
+            <td><label for="PTE">PTE</label></td>
+          <td><input type="number" name="PTE" value="10" step=1 required min=10 max=90></td>
+          </tr>
+
+          <tr>
+            <td><label for="GRE">GRE</label></td>
+            <td><input type="number" name="GRE" value="260" step=1 required min=260 max=340></td>
+          </tr>
+
+        {%endif%}
+
+
+
+      </tbody>
+    </table>
+      <input type="submit" id='fsb' value="Search">
+      </form>
+    </div>
+    <div id="second">
+      <img src="https://icon-library.com/images/graduation-hat-icon/graduation-hat-icon-4.jpg" alt="">
+    </div>
+
+  </div>
+  <div class="note">
+    "This is AI implemented College Recommender it is accurate but the college which are not recommended here does not mean that it is not a good match "
+  </div>
+</div>
+{%if datalen==10%}
+<div class="result">
+  <h1>Top 10 college recommendation Based on given data</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Universities</th>
+        <th>Public University</th>
+        <th>Scholarship</th>
+        <th>Accommodation</th>
+        <th>Fees</th>
+        <th>TOEFL</th>
+        <th>IELTS</th>
+        <th>PTE</th>
+        <th>GRE</th>
+      </tr>
+    </thead>
+    {%for i in range(datalen)%}
+    <tr>
+      <td><a href="{{data.iloc[i].link}}" target="_blank">{{data.iloc[i].Universities}}</a></td>
+      {%if data.iloc[i].Public_university==1%}
+        <td>Yes</td>
+      {%else%}
+        <td>No</td>
+      {%endif%}
+      {%if data.iloc[i].Scholarship==1%}
+        <td>Yes</td>
+      {%else%}
+        <td>No</td>
+      {%endif%}
+      {%if data.iloc[i].Accommodation==1%}
+        <td>Yes</td>
+      {%else%}
+        <td>No</td>
+      {%endif%}
+      <td>{{data.iloc[i].Fees}}</td>
+      <td>{{data.iloc[i].TOEFL}}</td>
+      <td>{{data.iloc[i].IELTS}}</td>
+      <td>{{data.iloc[i].PTE}}</td>
+      <td>{{data.iloc[i].GRE}}</td>
+    </tr>
+    {%endfor%}
+  </table>
+  <p> '0' doesnt mean that the particular exam is not required but it depends on college</p>
+</div>
+{%endif%}
+{%endblock content%}

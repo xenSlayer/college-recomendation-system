@@ -1,0 +1,3 @@
+This project was my internship practice project
+- The data , model and image is removed
+- The is just the code we implemented for the project 
