@@ -1,0 +1,7 @@
+beautifulsoup4==4.10.0
+Flask==2.0.3
+pandas2==0.0.0
+scipy==1.8.0
+neighbors==0.1.0
+pickle4==0.0.1
+pycopy-shutil==0.1
